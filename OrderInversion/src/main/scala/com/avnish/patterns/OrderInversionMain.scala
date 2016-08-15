@@ -33,6 +33,7 @@ object OrderInversionMain {
 
   def splitIntoPairs(row: String, width: Int): List[(String, String)] = {
     val words: Array[String] = row.split(" ")
+    words.foreach(println)
     var retList = scala.collection.mutable.ListBuffer[(String, String)]()
     val i: Int = 0;
     while (i < words.length) {

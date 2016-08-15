@@ -14,7 +14,7 @@ class CustomHashPartitioner (partitions: Int) extends Partitioner {
 
   def getPartition(key: Any): Int = key match {
     case null => 0
-    case x : (String,String) => Math floorMod (x._1.hashCode, numPartitions)
+    case (x,y) => x.hashCode%numPartitions
     case _  => 0
   }
 
