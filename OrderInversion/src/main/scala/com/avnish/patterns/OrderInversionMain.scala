@@ -27,9 +27,7 @@ object OrderInversionMain {
     val input = sc.textFile(inputFile)
 
     val rdd2 = input.flatMap(x => splitIntoPairs(x, windowSize)).map( x => (x,1))
-    rdd2.foreach(println)
-    println("***************** Number of partitions are **********************" + input.partitions.length) 
-    val rdd3 = rdd2.partitionBy(new CustomHashPartitioner(input.partitions.length)).reduceByKey( (a,b) => (a+b))
+    val rdd3 = rdd2.partitionBy(new CustomHashPartitioner(input.partitions.length)).reduceByKey( (a,b) => (a+b)).sortByKey()
     rdd3.foreach(println)
   }
 
