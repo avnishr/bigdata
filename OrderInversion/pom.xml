@@ -49,13 +49,6 @@
             <artifactId>hadoop-hdfs</artifactId>
             <version>2.7.2</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-mapreduce</artifactId>
-            <version>2.7.2</version>
-        </dependency>
-        -->
     </dependencies>
 
     <pluginRepositories>
@@ -80,6 +73,19 @@
                         </execution>
                     </executions>
                 </plugin>
+        	<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+                <configuration>
+          			<archive>
+            			<manifest>
+              				<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              				<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            			</manifest>
+          			</archive>                
+          	</configuration>
+            </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
@@ -90,7 +96,7 @@
                     <executions>
                         <execution>
                             <id>make-assembly</id>
-                            <phase>package</phase>
+                            <phase>install</phase>
                             <goals>
                                 <goal>single</goal>
                             </goals>
