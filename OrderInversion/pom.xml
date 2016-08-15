@@ -49,12 +49,13 @@
             <artifactId>hadoop-hdfs</artifactId>
             <version>2.7.2</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce</artifactId>
             <version>2.7.2</version>
         </dependency>
-
+        -->
     </dependencies>
 
     <pluginRepositories>
@@ -95,6 +96,21 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <finalName>uber-${artifactId}-${version}</finalName>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
