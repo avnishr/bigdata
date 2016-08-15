@@ -26,25 +26,28 @@ object OrderInversionMain {
     // Load our input data.
     val input = sc.textFile(inputFile)
 
-    val rdd2 = input.map(x => splitIntoPairs(x, windowSize)).map( x => (x,1))
+    val rdd2 = input.flatMap(x => splitIntoPairs(x, windowSize)).map( x => (x,1))
     rdd2.foreach(println)
+    println("***************** Number of partitions are **********************" + input.partitions.length) 
     val rdd3 = rdd2.partitionBy(new CustomHashPartitioner(input.partitions.length)).reduceByKey( (a,b) => (a+b))
+    rdd3.foreach(println)
   }
 
   def splitIntoPairs(row: String, width: Int): List[(String, String)] = {
     val words: Array[String] = row.split(" ")
-    words.foreach(println)
     var retList = scala.collection.mutable.ListBuffer[(String, String)]()
-    val i: Int = 0;
+    var i: Int = 0;
+    println("The words array size is " + words.length)
     while (i < words.length) {
       var end: Int = 0;
-      if (i + width < words.length) end = i + width else end = words.length;
-      for (j <- 0 to end) {
+      if (i + width < words.length) end = i + width else end = words.length-1;
+      for (j <- i+1 to end) {
         var tuple: (String, String) = (words(i), words(j))
         retList += tuple
         tuple = (words(j), words(i))
         retList += tuple
       }
+      i = i+1
     }
     retList toList
   }
